@@ -1,0 +1,212 @@
+/* Variáveis para controle de cores (Facilita o Modo Escuro) */
+:root {
+    --bg-color: #f4f7f6;
+    --text-color: #333333;
+    --card-bg: #ffffff;
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --accent-color: #e2e8f0;
+    --footer-bg: #1e293b;
+    --footer-text: #ffffff;
+    --transition-speed: 0.3s;
+}
+
+/* Classe aplicada via JS para o Modo Escuro */
+body.dark-mode {
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --card-bg: #1e293b;
+    --primary-color: #3b82f6;
+    --primary-hover: #60a5fa;
+    --accent-color: #334155;
+    --footer-bg: #020617;
+}
+
+/* Configurações Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Cabeçalho */
+header {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--accent-color);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+#toggle-dark-mode {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background var(--transition-speed);
+}
+
+#toggle-dark-mode:hover {
+    filter: brightness(0.9);
+}
+
+/* Conteúdo Principal */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.hero-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+/* Layout com Flexbox */
+.cards-section {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    transition: transform 0.2s ease;
+}
+
+/* Efeito Hover Suave solicitado na Rubrica B */
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+/* Seção Interativa e Formulários */
+.interactive-section {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin: 1.5rem 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 2px solid var(--accent-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+#btn-submit {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    transition: background var(--transition-speed);
+}
+
+#btn-submit:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Classes utilitárias do JS */
+.hidden {
+    display: none;
+}
+
+.feedback-box {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Rodapé */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 4rem;
+}
+
+/* Responsividade (Media Queries) - Rubrica B */
+@media (max-width: 768px) {
+    .cards-section {
+        flex-direction: column;
+    }
+    
+    .hero-section h2 {
+        font-size: 1.75rem;
+    }
+
+    .header-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
