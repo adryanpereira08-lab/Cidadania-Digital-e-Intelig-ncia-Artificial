@@ -1,45 +1,49 @@
-// Aguarda o carregamento do DOM para evitar erros de execução
-document.addEventListener('DOMContentLoaded', () => {
-
-    // --- REQUISITO: Acessibilidade / Modo Escuro ---
-    const toggleBtn = document.getElementById('toggle-dark-mode');
+// Aguarda o carregamento do DOM para garantir estabilidade
+document.addEventListener("DOMContentLoaded", () => {
     
-    toggleBtn.addEventListener('click', () => {
-        // Altera a classe no body disparando a troca de variáveis CSS
-        document.body.classList.toggle('dark-mode');
+    // --- FUNCIONALIDADE 1: MODO ESCURO ---
+    const btnDarkMode = document.getElementById("toggle-dark-mode");
+    
+    btnDarkMode.addEventListener("click", () => {
+        // Altera a classe no body para disparar as variáveis do CSS
+        document.body.classList.toggle("dark-mode");
         
-        // Breve feedback textual de mudança de estado do botão
-        if (document.body.classList.contains('dark-mode')) {
-            toggleBtn.textContent = '☀️ Modo Claro';
+        // Atualiza textualmente o botão para melhorar a experiência
+        if (document.body.classList.contains("dark-mode")) {
+            btnDarkMode.textContent = "☀️ Modo Claro";
         } else {
-            toggleBtn.textContent = '🌓 Modo Escuro';
+            btnDarkMode.textContent = "Compartilhar 🌓 Modo Escuro";
         }
     });
 
-    // --- REQUISITO: Manipulação dinâmica do DOM / Quiz Interativo ---
-    const quizForm = document.getElementById('quiz-form');
-    const feedbackBox = document.getElementById('quiz-feedback');
+    // --- FUNCIONALIDADE 2: VALIDADOR DE QUIZ ANTI-DESINFORMAÇÃO ---
+    const btnSubmitQuiz = document.getElementById("btn-submit-quiz");
+    const feedbackBox = document.getElementById("quiz-feedback");
 
-    quizForm.addEventListener('submit', (event) => {
-        // Impede o recarregamento padrão da página ao enviar formulário
-        event.preventDefault(); 
-
-        // Captura do dado inserido e armazenamento em variável para processamento
-        const userAnswer = document.getElementById('quiz-question').value;
-
-        // Limpa classes anteriores de feedback
-        feedbackBox.className = 'feedback-box';
-
-        // Processamento lógico da resposta
-        if (userAnswer === 'verificar') {
-            feedbackBox.textContent = 'Correto! Sempre cruze informações e verifique fontes confiáveis antes de repassar qualquer mídia.';
-            feedbackBox.classList.add('success');
-        } else {
-            feedbackBox.textContent = 'Resposta incorreta. Compartilhar sem checar ou simplesmente ignorar ajuda a propagar conteúdos manipulados de forma prejudicial.';
-            feedbackBox.classList.add('error');
+    btnSubmitQuiz.addEventListener("click", () => {
+        // Captura a opção selecionada usando seletores avançados
+        const selectedOption = document.querySelector('input[name="quiz-answer"]:checked');
+        
+        // Verifica se o usuário respondeu algo antes de processar
+        if (!selectedOption) {
+            feedbackBox.className = "feedback-error";
+            feedbackBox.textContent = "⚠️ Por favor, selecione uma alternativa antes de enviar.";
+            return;
         }
 
-        // Exibe a div de feedback removendo a classe utility .hidden
-        feedbackBox.classList.remove('hidden');
+        // Armazena o valor em uma variável antes de exibir na tela
+        const answerValue = selectedOption.value;
+
+        // Limpa classes anteriores de feedback
+        feedbackBox.classList.remove("hidden", "feedback-success", "feedback-error");
+
+        // Condicional e manipulação do DOM baseado na resposta
+        if (answerValue === "correto") {
+            feedbackBox.classList.add("feedback-success");
+            feedbackBox.textContent = "🎉 Parabéns! Você agiu como um cidadão digital consciente. Sempre cheque fontes confiáveis!";
+        } else {
+            feedbackBox.classList.add("feedback-error");
+            feedbackBox.textContent = "❌ Alerta de Risco! Compartilhar mídias sem checar espalha desinformação automatizada por IA. Tente novamente.";
+        }
     });
 });
