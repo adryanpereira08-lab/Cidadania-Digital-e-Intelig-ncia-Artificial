@@ -1,28 +1,25 @@
-/* Variáveis para controle de cores (Facilita o Modo Escuro) */
+/* Configurações Globais e Variáveis de Cores */
 :root {
-    --bg-color: #f4f7f6;
-    --text-color: #333333;
-    --card-bg: #ffffff;
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --accent-color: #e2e8f0;
-    --footer-bg: #1e293b;
-    --footer-text: #ffffff;
+    --bg-primary: #f4f7f6;
+    --bg-card: #ffffff;
+    --text-color: #2c3e50;
+    --accent-color: #3498db;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+    --header-bg: #2c3e50;
+    --header-text: #ffffff;
     --transition-speed: 0.3s;
 }
 
-/* Classe aplicada via JS para o Modo Escuro */
+/* Modo Escuro (Ativado via JS) */
 body.dark-mode {
-    --bg-color: #0f172a;
-    --text-color: #f8fafc;
-    --card-bg: #1e293b;
-    --primary-color: #3b82f6;
-    --primary-hover: #60a5fa;
-    --accent-color: #334155;
-    --footer-bg: #020617;
+    --bg-primary: #1a1a2e;
+    --bg-card: #16213e;
+    --text-color: #e2e8f0;
+    --header-bg: #0f172a;
+    --accent-color: #60a5fa;
 }
 
-/* Configurações Gerais */
 * {
     margin: 0;
     padding: 0;
@@ -31,7 +28,7 @@ body.dark-mode {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color);
+    background-color: var(--bg-primary);
     color: var(--text-color);
     line-height: 1.6;
     transition: background-color var(--transition-speed), color var(--transition-speed);
@@ -39,174 +36,165 @@ body {
 
 /* Cabeçalho */
 header {
-    background-color: var(--card-bg);
-    border-bottom: 1px solid var(--accent-color);
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .header-container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-h1 {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
 #toggle-dark-mode {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 8px 16px;
     border-radius: 20px;
     cursor: pointer;
-    font-weight: 600;
-    transition: background var(--transition-speed);
+    font-weight: bold;
+    transition: all var(--transition-speed);
 }
 
 #toggle-dark-mode:hover {
-    filter: brightness(0.9);
+    background-color: var(--accent-color);
+    color: white;
 }
 
 /* Conteúdo Principal */
 main {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
-.hero-section {
-    text-align: center;
-    margin-bottom: 3rem;
+section {
+    background-color: var(--bg-card);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.hero-section h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
+h2 {
+    margin-bottom: 20px;
+    color: var(--accent-color);
 }
 
-/* Layout com Flexbox */
-.cards-section {
+/* Flexbox nos Cards de Guia */
+.cards-container {
     display: flex;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+    gap: 20px;
+    justify-content: space-between;
 }
 
 .card {
-    background-color: var(--card-bg);
-    padding: 1.5rem;
+    background-color: var(--bg-primary);
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     flex: 1;
-    transition: transform 0.2s ease;
+    transition: transform var(--transition-speed);
 }
 
-/* Efeito Hover Suave solicitado na Rubrica B */
 .card:hover {
     transform: translateY(-5px);
 }
 
 .card h3 {
-    margin-bottom: 0.75rem;
-    color: var(--primary-color);
+    margin-bottom: 10px;
 }
 
-/* Seção Interativa e Formulários */
-.interactive-section {
-    background-color: var(--card-bg);
-    padding: 2rem;
+/* Área do Quiz */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--bg-primary);
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.form-group {
-    margin: 1.5rem 0;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-select {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 6px;
-    border: 2px solid var(--accent-color);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-size: 1rem;
-}
-
-#btn-submit {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
-    width: 100%;
     transition: background var(--transition-speed);
 }
 
-#btn-submit:hover {
-    background-color: var(--primary-hover);
+.quiz-option:hover {
+    background-color: rgba(52, 152, 219, 0.1);
 }
 
-/* Classes utilitárias do JS */
+#btn-submit-quiz {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity var(--transition-speed);
+}
+
+#btn-submit-quiz:hover {
+    opacity: 0.9;
+}
+
+/* Feedbacks Dinâmicos */
+#quiz-feedback {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.feedback-success {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.feedback-error {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
 .hidden {
     display: none;
 }
 
-.feedback-box {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    border-radius: 6px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.success {
-    background-color: #d1fae5;
-    color: #065f46;
-}
-
-.error {
-    background-color: #fee2e2;
-    color: #991b1b;
-}
-
 /* Rodapé */
 footer {
-    background-color: var(--footer-bg);
-    color: var(--footer-text);
     text-align: center;
-    padding: 1.5rem;
-    margin-top: 4rem;
+    padding: 30px;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    margin-top: 60px;
 }
 
-/* Responsividade (Media Queries) - Rubrica B */
+/* 4. RESPONSIVIDADE - Media Queries para Celulares */
 @media (max-width: 768px) {
-    .cards-section {
-        flex-direction: column;
-    }
-    
-    .hero-section h2 {
-        font-size: 1.75rem;
-    }
-
     .header-container {
         flex-direction: column;
-        gap: 1rem;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .cards-container {
+        flex-direction: column;
+    }
+
+    main {
+        margin: 20px auto;
     }
 }
