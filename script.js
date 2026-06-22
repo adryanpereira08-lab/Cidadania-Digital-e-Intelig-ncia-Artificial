@@ -1,4 +1,4 @@
-// Lista de perguntas do jogo
+// Banco de dados de perguntas isolado
 const perguntas = [
     {
         pergunta: "O que é um 'Deepfake'?",
@@ -8,7 +8,7 @@ const perguntas = [
             "Um perfil em rede social que só posta notícias verdadeiras.",
             "Uma inteligência artificial que ajuda a limpar dados antigos do computador."
         ],
-        correta: 1 // Índice da alternativa correta (começa em 0)
+        correta: 1
     },
     {
         pergunta: "Ao usar uma IA para gerar um texto escolar, qual é a atitude eticamente correta?",
@@ -52,89 +52,90 @@ const perguntas = [
     }
 ];
 
-// Elementos da DOM
-const elementoPergunta = document.getElementById("pergunta");
-const containerBotoes = document.getElementById("botoes-alternativas");
-const containerControles = document.getElementById("controles");
-const botaoProximo = document.getElementById("botao-proximo");
-const containerResultado = document.getElementById("resultado-container");
-const textoResultado = document.getElementById("texto-resultado");
-const botaoReiniciar = document.getElementById("botao-reiniciar");
-const quizContainer = document.getElementById("quiz");
+// Estado da Aplicação
+let estadoQuiz = {
+    indiceAtual: 0,
+    pontuacao: 0
+};
 
-let indicePerguntaAtual = 0;
-let pontuacao = 0;
+// Seletores do DOM
+const elementos = {
+    pergunta: document.getElementById("pergunta"),
+    containerBotoes: document.getElementById("botoes-alternativas"),
+    containerControles: document.getElementById("controles"),
+    botaoProximo: document.getElementById("botao-proximo"),
+    containerResultado: document.getElementById("resultado-container"),
+    textoResultado: document.getElementById("texto-resultado"),
+    botaoReiniciar: document.getElementById("botao-reiniciar"),
+    quizContainer: document.getElementById("quiz")
+};
 
-// Inicializa o Jogo
+// Inicializa ou reinicia o jogo
 function iniciarJogo() {
-    indicePerguntaAtual = 0;
-    pontuacao = 0;
-    containerResultado.classList.add("escondido");
-    quizContainer.classList.remove("escondido");
+    estadoQuiz.indiceAtual = 0;
+    estadoQuiz.pontuacao = 0;
+    elementos.containerResultado.classList.add("escondido");
+    elementos.quizContainer.classList.remove("escondido");
     mostrarPergunta();
 }
 
-// Mostra a pergunta atual e as alternativas
+// Renderiza a pergunta da vez
 function mostrarPergunta() {
-    resetarEstado();
-    let perguntaAtual = perguntas[indicePerguntaAtual];
-    elementoPergunta.innerText = perguntaAtual.pergunta;
+    limparEstadoAnterior();
+    const perguntaAtual = perguntas[estadoQuiz.indiceAtual];
+    elementos.pergunta.textContent = perguntaAtual.pergunta;
 
     perguntaAtual.alternativas.forEach((alternativa, index) => {
         const botao = document.createElement("button");
-        botao.innerText = alternativa;
+        botao.textContent = alternativa;
         botao.classList.add("btn-opcao");
-        botao.addEventListener("click", () => selecionarAlternativa(index, botao));
-        containerBotoes.appendChild(botao);
+        botao.addEventListener("click", () => verificarResposta(index, botao));
+        elementos.containerBotoes.appendChild(botao);
     });
 }
 
-// Limpa os botões antigos
-function resetarEstado() {
-    containerControles.classList.add("escondido");
-    while (containerBotoes.firstChild) {
-        containerBotoes.removeChild(containerBotoes.firstChild);
-    }
+// Reseta a área de botões do quiz
+function limparEstadoAnterior() {
+    elementos.containerControles.classList.add("escondido");
+    elementos.containerBotoes.replaceChildren(); // Método moderno e mais rápido que remover filhos manualmente
 }
 
-// Trata a escolha do usuário
-function selecionarAlternativa(indiceSelecionado, botaoClicado) {
-    let indiceCorreto = perguntas[indicePerguntaAtual].correta;
-    let todosBotoes = containerBotoes.querySelectorAll(".btn-opcao");
+// Gerencia a resposta selecionada pelo usuário
+function verificarResposta(indiceSelecionado, botaoClicado) {
+    const indiceCorreto = perguntas[estadoQuiz.indiceAtual].correta;
+    const todosBotoes = elementos.containerBotoes.querySelectorAll(".btn-opcao");
 
     if (indiceSelecionado === indiceCorreto) {
         botaoClicado.classList.add("correto");
-        pontuacao++;
+        estadoQuiz.pontuacao++;
     } else {
         botaoClicado.classList.add("errado");
-        // Mostra visualmente qual era a correta
         todosBotoes[indiceCorreto].classList.add("correto");
     }
 
-    // Desativa todos os botões para não clicar de novo
+    // Desabilita as opções após a escolha
     todosBotoes.forEach(botao => botao.disabled = true);
-    containerControles.classList.remove("escondido");
+    elementos.containerControles.classList.remove("escondido");
 }
 
-// Passa para a próxima pergunta ou exibe o fim do jogo
-botaoProximo.addEventListener("click", () => {
-    indicePerguntaAtual++;
-    if (indicePerguntaAtual < perguntas.length) {
+// Avança o fluxo do quiz
+elementos.botaoProximo.addEventListener("click", () => {
+    estadoQuiz.indiceAtual++;
+    if (estadoQuiz.indiceAtual < perguntas.length) {
         mostrarPergunta();
     } else {
-        mostrarResultado();
+        exibirResultadoFinal();
     }
 });
 
-// Mostra a tela final com a pontuação
-function mostrarResultado() {
-    quizContainer.classList.add("escondido");
-    containerResultado.classList.remove("escondido");
-    textoResultado.innerText = `Você acertou ${pontuacao} de ${perguntas.length} perguntas!`;
+// Mostra o feedback de encerramento
+function exibirResultadoFinal() {
+    elementos.quizContainer.classList.add("escondido");
+    elementos.containerResultado.classList.remove("escondido");
+    elementos.textoResultado.textContent = `Você acertou ${estadoQuiz.pontuacao} de ${perguntas.length} perguntas!`;
 }
 
-// Reiniciar o jogo
-botaoReiniciar.addEventListener("click", iniciarJogo);
+elementos.botaoReiniciar.addEventListener("click", iniciarJogo);
 
-// Inicia o script quando a página carrega
-iniciarJogo();
+// Execução inicial do Quiz
+document.addEventListener("DOMContentLoaded", iniciarJogo);
