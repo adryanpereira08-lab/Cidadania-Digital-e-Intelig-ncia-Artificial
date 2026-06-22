@@ -1,63 +1,140 @@
-// Perguntas do Quiz sobre Cidadania Digital e IA ampliado
-const quizData = [
+// Lista de perguntas do jogo
+const perguntas = [
     {
-        question: "O que é um 'Deepfake'?",
-        options: [
-            "Um antivírus avançado feito por IA.",
-            "Vídeos ou áudios alterados por IA para parecerem reais, mas que são falsos.",
-            "Um tipo de computador quântico.",
-            "Um perfil de rede social focado em tecnologia."
+        pergunta: "O que é um 'Deepfake'?",
+        alternativas: [
+            "Um antivírus de última geração baseado em IA.",
+            "Vídeos ou áudios gerados por IA que imitam pessoas reais dizendo coisas que não disseram.",
+            "Um perfil em rede social que só posta notícias verdadeiras.",
+            "Uma inteligência artificial que ajuda a limpar dados antigos do computador."
         ],
-        correct: 1
+        correta: 1 // Índice da alternativa correta (começa em 0)
     },
     {
-        question: "Ao usar ferramentas de IA que geram texto ou imagens, qual deve ser sua postura ética?",
-        options: [
-            "Copiar e colar o resultado fingindo que foi você quem fez tudo.",
-            "Não usar, pois toda IA é ilegal.",
-            "Verificar as informações e dar os créditos ou indicar o uso da ferramenta se necessário.",
-            "Espalhar o resultado sem checar se é verdadeiro ou falso."
+        pergunta: "Ao usar uma IA para gerar um texto escolar, qual é a atitude eticamente correta?",
+        alternativas: [
+            "Copiar e colar o texto fingindo que foi você quem escreveu por completo.",
+            "Usar a IA como apoio para ideias, mas escrever com suas palavras e citar o uso da ferramenta.",
+            "Não entregar o trabalho e dizer que a IA apagou os arquivos.",
+            "Vender o texto gerado pela IA para seus colegas de classe."
         ],
-        correct: 2
+        correta: 1
     },
     {
-        question: "Por que devemos nos preocupar com os dados que fornecemos para as IAs?",
-        options: [
-            "Porque elas podem usar suas informações pessoais para treinar modelos públicos ou violar sua privacidade.",
-            "Porque os dados podem quebrar a Inteligência Artificial.",
-            "Não precisamos nos preocupar, todas as IAs são 100% seguras.",
-            "Porque a IA cobra dinheiro por cada palavra digitada."
+        pergunta: "O que significa o termo 'Viés Algorítmico' na Inteligência Artificial?",
+        alternativas: [
+            "Quando a IA fica muito rápida no processamento de dados.",
+            "Quando uma IA aprende preconceitos humanos presentes nos dados usados para treiná-la.",
+            "O cabo físico que conecta os servidores de inteligência artificial.",
+            "Um sistema que impede ataques de hackers."
         ],
-        correct: 0
+        correta: 1
     },
     {
-        question: "O que significa o termo 'Viés algorítmico' (Algorithmic Bias) em IA?",
-        options: [
-            "Quando a IA fica lenta devido ao excesso de usuários.",
-            "A capacidade da IA de prever o futuro com total precisão.",
-            "Preconceitos e distorções que a IA aprende a partir de dados históricos humanos problemáticos.",
-            "O design visual das ferramentas de inteligência artificial."
+        pergunta: "Qual dessas ações protege sua privacidade ao interagir com assistentes virtuais ou IAs?",
+        alternativas: [
+            "Compartilhar senhas e dados bancários para a IA guardar.",
+            "Digitar o endereço completo e rotina diária de toda a sua família.",
+            "Evitar inserir dados pessoais sensíveis nas plataformas de conversação.",
+            "Deixar a câmera e o microfone ligados transmitindo dados 24 horas por dia."
         ],
-        correct: 2
+        correta: 2
     },
     {
-        question: "Se você encontrar uma notícia duvidosa gerada por IA nas redes sociais, qual a atitude correta do cidadão digital?",
-        options: [
-            "Compartilhar imediatamente para avisar os amigos, sem checar.",
-            "Ignorar completamente e não fazer nada.",
-            "Validar a informação em fontes confiáveis e denunciar a publicação se for fake news.",
-            "Comentar na publicação fingindo que é verdade para ganhar curtidas."
+        pergunta: "Como o bom Cidadão Digital deve reagir ao ver uma notícia duvidosa gerada por IA?",
+        alternativas: [
+            "Compartilhar imediatamente em todos os grupos para avisar os outros.",
+            "Ignorar completamente e não fazer nada a respeito.",
+            "Verificar em fontes de notícias confiáveis e agências de checagem antes de repassar.",
+            "Comentar na publicação dizendo que é 100% real sem pesquisar."
         ],
-        correct: 2
-    },
-    {
-        question: "Qual das alternativas abaixo define uma 'Alucinação' de uma Inteligência Artificial?",
-        options: [
-            "Quando o sistema de IA é infectado por um vírus biológico.",
-            "Quando a IA gera uma resposta que parece confiável e correta, mas que é completamente inventada ou incorreta.",
-            "Quando o computador desliga sozinho por superaquecimento.",
-            "Um filtro de realidade aumentada usado em chamadas de vídeo."
-        ],
-        correct: 1
+        correta: 2
     }
 ];
+
+// Elementos da DOM
+const elementoPergunta = document.getElementById("pergunta");
+const containerBotoes = document.getElementById("botoes-alternativas");
+const containerControles = document.getElementById("controles");
+const botaoProximo = document.getElementById("botao-proximo");
+const containerResultado = document.getElementById("resultado-container");
+const textoResultado = document.getElementById("texto-resultado");
+const botaoReiniciar = document.getElementById("botao-reiniciar");
+const quizContainer = document.getElementById("quiz");
+
+let indicePerguntaAtual = 0;
+let pontuacao = 0;
+
+// Inicializa o Jogo
+function iniciarJogo() {
+    indicePerguntaAtual = 0;
+    pontuacao = 0;
+    containerResultado.classList.add("escondido");
+    quizContainer.classList.remove("escondido");
+    mostrarPergunta();
+}
+
+// Mostra a pergunta atual e as alternativas
+function mostrarPergunta() {
+    resetarEstado();
+    let perguntaAtual = perguntas[indicePerguntaAtual];
+    elementoPergunta.innerText = perguntaAtual.pergunta;
+
+    perguntaAtual.alternativas.forEach((alternativa, index) => {
+        const botao = document.createElement("button");
+        botao.innerText = alternativa;
+        botao.classList.add("btn-opcao");
+        botao.addEventListener("click", () => selecionarAlternativa(index, botao));
+        containerBotoes.appendChild(botao);
+    });
+}
+
+// Limpa os botões antigos
+function resetarEstado() {
+    containerControles.classList.add("escondido");
+    while (containerBotoes.firstChild) {
+        containerBotoes.removeChild(containerBotoes.firstChild);
+    }
+}
+
+// Trata a escolha do usuário
+function selecionarAlternativa(indiceSelecionado, botaoClicado) {
+    let indiceCorreto = perguntas[indicePerguntaAtual].correta;
+    let todosBotoes = containerBotoes.querySelectorAll(".btn-opcao");
+
+    if (indiceSelecionado === indiceCorreto) {
+        botaoClicado.classList.add("correto");
+        pontuacao++;
+    } else {
+        botaoClicado.classList.add("errado");
+        // Mostra visualmente qual era a correta
+        todosBotoes[indiceCorreto].classList.add("correto");
+    }
+
+    // Desativa todos os botões para não clicar de novo
+    todosBotoes.forEach(botao => botao.disabled = true);
+    containerControles.classList.remove("escondido");
+}
+
+// Passa para a próxima pergunta ou exibe o fim do jogo
+botaoProximo.addEventListener("click", () => {
+    indicePerguntaAtual++;
+    if (indicePerguntaAtual < perguntas.length) {
+        mostrarPergunta();
+    } else {
+        mostrarResultado();
+    }
+});
+
+// Mostra a tela final com a pontuação
+function mostrarResultado() {
+    quizContainer.classList.add("escondido");
+    containerResultado.classList.remove("escondido");
+    textoResultado.innerText = `Você acertou ${pontuacao} de ${perguntas.length} perguntas!`;
+}
+
+// Reiniciar o jogo
+botaoReiniciar.addEventListener("click", iniciarJogo);
+
+// Inicia o script quando a página carrega
+iniciarJogo();
