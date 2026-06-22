@@ -1,38 +1,43 @@
-/* Configurações Gerais e Cores */
+/* Reset básico e Variáveis */
 :root {
     --cor-fundo: #0f172a;
     --cor-card: #1e293b;
     --cor-texto: #f8fafc;
     --cor-primaria: #6366f1;
     --cor-primaria-hover: #4f46e5;
-    --cor-correto: #22c55e;
+    --cor-correto: #10b981;
     --cor-errado: #ef4444;
+    --transicao: all 0.3s ease;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header */
 header {
     background: linear-gradient(135deg, #4f46e5, #06b6d4);
     text-align: center;
-    padding: 3rem 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 3.5rem 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 header h1 {
     font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 800;
 }
 
 /* Conteúdo Principal */
@@ -40,10 +45,7 @@ header h1 {
     max-width: 900px;
     margin: 2rem auto;
     padding: 0 1.5rem;
-}
-
-.conteudo {
-    margin-bottom: 3rem;
+    flex: 1; /* Garante que o footer fique embaixo se a tela for grande */
 }
 
 .conteudo h2 {
@@ -53,7 +55,7 @@ header h1 {
 
 .cards-diretrizes {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
 }
@@ -61,13 +63,15 @@ header h1 {
 .card {
     background-color: var(--cor-card);
     padding: 1.5rem;
-    border-radius: 10px;
+    border-radius: 12px;
     border-top: 4px solid var(--cor-primaria);
-    transition: transform 0.2s;
+    transition: var(--transicao);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
 }
 
 .card h3 {
@@ -84,9 +88,9 @@ hr {
 /* Estilização do Quiz */
 .jogo-container {
     background-color: var(--cor-card);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
@@ -97,7 +101,7 @@ hr {
 
 #pergunta-container {
     margin: 2rem 0;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 600;
 }
 
@@ -112,12 +116,13 @@ hr {
     background-color: #334155;
     color: var(--cor-texto);
     border: 2px solid #475569;
-    padding: 1rem;
+    padding: 1.2rem;
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transicao);
     text-align: left;
+    width: 100%;
 }
 
 .btn-opcao:hover:not([disabled]) {
@@ -125,15 +130,21 @@ hr {
     border-color: var(--cor-primaria);
 }
 
-/* Cores de feedback do quiz */
+.btn-opcao:disabled {
+    cursor: not-allowed;
+}
+
+/* Feedbacks de validação */
 .correto {
     background-color: var(--cor-correto) !important;
-    border-color: #16a34a !important;
+    border-color: #059669 !important;
+    color: white;
 }
 
 .errado {
     background-color: var(--cor-errado) !important;
-    border-color: #dc2626 !important;
+    border-color: #b91c1c !important;
+    color: white;
 }
 
 /* Botões de Ação */
@@ -141,11 +152,12 @@ hr {
     background-color: var(--cor-primaria);
     color: white;
     border: none;
-    padding: 0.75rem 2rem;
+    padding: 0.85rem 2.5rem;
     font-size: 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    transition: var(--transicao);
 }
 
 .btn-proximo:hover, .btn-reiniciar:hover {
@@ -154,7 +166,7 @@ hr {
 
 /* Classes Utilitárias */
 .escondido {
-    display: none;
+    display: none !important;
 }
 
 /* Rodapé */
@@ -163,11 +175,11 @@ footer {
     padding: 2rem;
     color: #64748b;
     font-size: 0.9rem;
-    margin-top: 4rem;
+    border-top: 1px solid #1e293b;
 }
 
 /* Responsividade */
-@media (min-width: 600px) {
+@media (min-width: 650px) {
     .botoes-grade {
         grid-template-columns: 1fr 1fr;
     }
