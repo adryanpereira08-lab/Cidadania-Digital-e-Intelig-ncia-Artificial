@@ -1,171 +1,120 @@
-/* Reset básico e Variáveis */
+/* Configurações Gerais e Cores */
 :root {
-    --cor-fundo: #0f172a;
-    --cor-card: #1e293b;
-    --cor-texto: #f8fafc;
-    --cor-primaria: #6366f1;
-    --cor-primaria-hover: #4f46e5;
-    --cor-correto: #10b981;
-    --cor-errado: #ef4444;
-    --transicao: all 0.3s ease;
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --primary-color: #6366f1;
+    --secondary-color: #a855f7;
+    --text-color: #f8fafc;
+    --accent-color: #10b981;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-/* Header */
+/* Cabeçalho */
 header {
-    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 3rem 1rem;
     text-align: center;
-    padding: 3.5rem 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 header h1 {
     font-size: 2.5rem;
-    margin-bottom: 0.75rem;
-    font-weight: 800;
+    margin-bottom: 0.5rem;
 }
 
-/* Conteúdo Principal */
+/* Layout Principal */
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 2rem auto;
-    padding: 0 1.5rem;
-    flex: 1; /* Garante que o footer fique embaixo se a tela for grande */
+    padding: 0 1rem;
 }
 
-.conteudo h2 {
-    color: #06b6d4;
-    margin-bottom: 1rem;
-}
-
-.cards-diretrizes {
+.intro-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
-    margin-top: 2rem;
+    margin-bottom: 3rem;
 }
 
 .card {
-    background-color: var(--cor-card);
+    background-color: var(--card-bg);
     padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 5px solid var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+/* Seção do Quiz */
+.quiz-section {
+    background-color: var(--card-bg);
+    padding: 2rem;
     border-radius: 12px;
-    border-top: 4px solid var(--cor-primaria);
-    transition: var(--transicao);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-}
-
-.card h3 {
-    margin-bottom: 0.5rem;
-}
-
-hr {
-    border: 0;
-    height: 1px;
-    background: #334155;
-    margin: 3rem 0;
-}
-
-/* Estilização do Quiz */
-.jogo-container {
-    background-color: var(--cor-card);
-    padding: 2.5rem 2rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-.jogo-container h2 {
-    color: #a855f7;
+.quiz-section h2 {
     margin-bottom: 0.5rem;
 }
 
-#pergunta-container {
-    margin: 2rem 0;
-    font-size: 1.3rem;
-    font-weight: 600;
+#quiz-container {
+    margin-top: 2rem;
+    min-height: 200px;
 }
 
-.botoes-grade {
+#question-text {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+#options-container {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.btn-opcao {
+button {
     background-color: #334155;
-    color: var(--cor-texto);
-    border: 2px solid #475569;
-    padding: 1.2rem;
+    color: var(--text-color);
+    border: 2px solid transparent;
+    padding: 0.8rem 1.5rem;
     font-size: 1rem;
-    border-radius: 10px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: var(--transicao);
-    text-align: left;
-    width: 100%;
+    transition: all 0.3s ease;
 }
 
-.btn-opcao:hover:not([disabled]) {
-    background-color: #475569;
-    border-color: var(--cor-primaria);
+button:hover {
+    background-color: var(--primary-color);
+    border-color: var(--text-color);
 }
 
-.btn-opcao:disabled {
-    cursor: not-allowed;
+#restart-btn {
+    background-color: var(--accent-color);
+    margin-top: 1rem;
 }
 
-/* Feedbacks de validação */
-.correto {
-    background-color: var(--cor-correto) !important;
-    border-color: #059669 !important;
-    color: white;
-}
-
-.errado {
-    background-color: var(--cor-errado) !important;
-    border-color: #b91c1c !important;
-    color: white;
-}
-
-/* Botões de Ação */
-.btn-proximo, .btn-reiniciar {
-    background-color: var(--cor-primaria);
-    color: white;
-    border: none;
-    padding: 0.85rem 2.5rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: var(--transicao);
-}
-
-.btn-proximo:hover, .btn-reiniciar:hover {
-    background-color: var(--cor-primaria-hover);
-}
-
-/* Classes Utilitárias */
-.escondido {
+.hide {
     display: none !important;
 }
 
@@ -173,14 +122,7 @@ hr {
 footer {
     text-align: center;
     padding: 2rem;
+    margin-top: 3rem;
     color: #64748b;
     font-size: 0.9rem;
-    border-top: 1px solid #1e293b;
-}
-
-/* Responsividade */
-@media (min-width: 650px) {
-    .botoes-grade {
-        grid-template-columns: 1fr 1fr;
-    }
 }
