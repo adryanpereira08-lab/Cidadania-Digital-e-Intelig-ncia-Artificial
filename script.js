@@ -1,106 +1,114 @@
-// Perguntas do Quiz sobre Cidadania Digital e IA
-const quizData = [
+// Perguntas do Quiz
+const questions = [
+    {
+        question: "O que é mais importante ao compartilhar uma notícia gerada por IA?",
+        answers: [
+            { text: "Verificar se a informação é verdadeira antes de espalhar.", correct: true },
+            { text: "Compartilhar imediatamente se for engraçada.", correct: false },
+            { text: "Apenas curtir, pois tudo na internet é real.", correct: false }
+        ]
+    },
+    {
+        question: "Qual atitude demonstra boa Cidadania Digital?",
+        answers: [
+            { text: "Usar IA para criar imagens falsas de colegas.", correct: false },
+            { text: "Respeitar a opinião dos outros e proteger seus dados.", correct: true },
+            { text: "Ignorar as regras de segurança dos sites.", correct: false }
+        ]
+    },
+    {
+        question: "Se uma IA coletar seus dados pessoais, você deve:",
+        answers: [
+            { text: "Não se importar, dados não são importantes.", correct: false },
+            { text: "Aceitar todos os termos sem ler.", correct: false },
+            { text: "Ler as políticas de privacidade e saber como eles serão usados.", correct: true }
+        ]
+    },
+    {
+        question: "O termo 'Pegada Digital' refere-se a:",
+        answers: [
+            { text: "O rastro de informações que você deixa ao usar a internet.", correct: true },
+            { text: "A marca do seu dedo na tela do celular.", correct: false },
+            { text: "A velocidade da sua conexão de internet.", correct: false }
+        ]
+    },
     {
         question: "O que é um 'Deepfake'?",
-        options: [
-            "Um antivírus avançado feito por IA.",
-            "Vídeos ou áudios alterados por IA para parecerem reais, mas que são falsos.",
-            "Um tipo de computador quântico.",
-            "Um perfil de rede social focado em tecnologia."
-        ],
-        correct: 1
-    },
-    {
-        question: "Ao usar ferramentas de IA que geram texto ou imagens, qual deve ser sua postura ética?",
-        options: [
-            "Copiar e colar o resultado fingindo que foi você quem fez tudo.",
-            "Não usar, pois toda IA é ilegal.",
-            "Verificar as informações e dar os créditos ou indicar o uso da ferramenta se necessário.",
-            "Espalhar o resultado sem checar se é verdadeiro ou falso."
-        ],
-        correct: 2
-    },
-    {
-        question: "Por que devemos nos preocupar com os dados que fornecemos para as IAs?",
-        options: [
-            "Porque elas podem usar suas informações pessoais para treinar modelos públicos ou violar sua privacidade.",
-            "Porque os dados podem quebrar a Inteligência Artificial.",
-            "Não precisamos nos preocupar, todas as IAs são 100% seguras.",
-            "Porque a IA cobra dinheiro por cada palavra digitada."
-        ],
-        correct: 0
+        answers: [
+            { text: "Um antivírus super potente.", correct: false },
+            { text: "Vídeos ou áudios alterados por IA para parecerem reais.", correct: true },
+            { text: "Um jogo de realidade virtual.", correct: false }
+        ]
     }
 ];
 
 let currentQuestionIndex = 0;
 let score = 0;
 
-const questionText = document.getElementById("question-text");
-const optionsContainer = document.getElementById("options-container");
-const resultBox = document.getElementById("result-box");
-const questionBox = document.getElementById("question-box");
-const scoreText = document.getElementById("score-text");
+const questionTextElement = document.getElementById('question-text');
+const optionsContainerElement = document.getElementById('options-container');
+const resultContainerElement = document.getElementById('result-container');
+const questionContainerElement = document.getElementById('question-container');
+const scoreTextElement = document.getElementById('score-text');
 
-function loadQuestion() {
+function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    resultContainerElement.classList.add('hide');
+    questionContainerElement.classList.remove('hide');
+    showQuestion();
+}
+
+function showQuestion() {
     resetState();
-    let currentQuestion = quizData[currentQuestionIndex];
-    questionText.innerText = currentQuestion.question;
+    let currentQuestion = questions[currentQuestionIndex];
+    questionTextElement.innerText = currentQuestion.question;
 
-    currentQuestion.options.forEach((option, index) => {
-        const button = document.createElement("button");
-        button.innerText = option;
-        button.classList.add("btn-option");
-        button.addEventListener("click", () => selectAnswer(index, button));
-        optionsContainer.appendChild(button);
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener('click', selectAnswer);
+        optionsContainerElement.appendChild(button);
     });
 }
 
 function resetState() {
-    while (optionsContainer.firstChild) {
-        optionsContainer.removeChild(optionsContainer.firstChild);
+    while (optionsContainerElement.firstChild) {
+        optionsContainerElement.removeChild(optionsContainerElement.firstChild);
     }
 }
 
-function selectAnswer(selectedIndex, clickedButton) {
-    const correctIndex = quizData[currentQuestionIndex].correct;
-    const allButtons = optionsContainer.querySelectorAll(".btn-option");
-
-    // Desabilita todos os botões após o clique para o usuário não clicar duas vezes
-    allButtons.forEach(button => button.disabled = true);
-
-    if (selectedIndex === correctIndex) {
-        clickedButton.classList.add("correct");
+function selectAnswer(e) {
+    const selectedButton = e.target;
+    const isCorrect = selectedButton.dataset.correct === "true";
+    
+    if (isCorrect) {
         score++;
+        selectedButton.style.backgroundColor = "var(--accent-color)";
     } else {
-        clickedButton.classList.add("wrong");
-        // Mostra a resposta correta em verde
-        allButtons[correctIndex].classList.add("correct");
+        selectedButton.style.backgroundColor = "#ef4444"; // Vermelho para erro
     }
 
-    // Espera 2 segundos para passar para a próxima pergunta
+    // Espera 1 segundo para mostrar a próxima pergunta ou o resultado
     setTimeout(() => {
         currentQuestionIndex++;
-        if (currentQuestionIndex < quizData.length) {
-            loadQuestion();
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
         } else {
-            showResults();
+            showResult();
         }
-    }, 2000);
+    }, 1000);
 }
 
-function showResults() {
-    questionBox.classList.add("hidden");
-    resultBox.classList.remove("hidden");
-    scoreText.innerText = `Você acertou ${score} de ${quizData.length} perguntas!`;
+function showResult() {
+    questionContainerElement.classList.add('hide');
+    resultContainerElement.classList.remove('hide');
+    scoreTextElement.innerText = `Você acertou ${score} de ${questions.length} perguntas!`;
 }
 
-function restartGame() {
-    currentQuestionIndex = 0;
-    score = 0;
-    resultBox.classList.add("hidden");
-    questionBox.classList.remove("hidden");
-    loadQuestion();
-}
-
-// Inicializa o jogo ao carregar a página
-window.onload = loadQuestion;
+// Inicia o jogo automaticamente ao carregar a página
+window.onload = startQuiz;
