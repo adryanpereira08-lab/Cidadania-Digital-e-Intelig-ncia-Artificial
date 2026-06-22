@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cidadania Digital & IA</title>
+    <title>Cidadania Digital & Inteligência Artificial</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <h1>Cidadania Digital & Inteligência Artificial</h1>
+        <h1>Cidadania Digital &amp; Inteligência Artificial</h1>
         <p>Navegando pelo futuro com responsabilidade, ética e segurança.</p>
     </header>
 
@@ -19,23 +19,36 @@
             <p>A <strong>Cidadania Digital</strong> é o conjunto de diretrizes para o uso responsável, ético e seguro da tecnologia. Com o avanço da <strong>Inteligência Artificial (IA)</strong>, surgem novos desafios, como discernir fatos de <em>deepfakes</em>, proteger dados pessoais e combater preconceitos algorítmicos.</p>
             
             <div class="cards-diretrizes">
-                <div class="card">
+                <article class="card">
                     <h3>🛡️ Segurança</h3>
                     <p>Proteja suas senhas e dados ao interagir com ferramentas de IA.</p>
-                </div>
-                <div class="card">
+                </article>
+                <article class="card">
                     <h3>🧠 Pensamento Crítico</h3>
                     <p>Nem tudo que a IA gera é verdade. Sempre verifique as fontes.</p>
-                </div>
-                <div class="card">
+                </article>
+                <article class="card">
                     <h3>⚖️ Ética</h3>
                     <p>Não use a IA para plagiar, trapacear ou criar conteúdos falsos.</p>
-                </div>
+                </article>
             </div>
         </section>
 
         <hr>
 
-        <section class="jogo-container">
+        <section class="jogo-container" aria-live="polite">
             <h2>Desafio do Cidadão Digital</h2>
-            <p>Teste seus
+            <p>Teste seus conhecimentos sobre ética, IA e segurança na internet!</p>
+            
+            <div id="quiz">
+                <div id="pergunta-container">
+                    <p id="pergunta">Carregando pergunta...</p>
+                </div>
+                <div id="botoes-alternativas" class="botoes-grade" role="group" aria-label="Alternativas da pergunta">
+                    </div>
+                <div id="controles" class="escondido">
+                    <button id="botao-proximo" class="btn-proximo">Próxima Pergunta</button>
+                </div>
+            </div>
+
+            <div id="resultado-container" class="es
