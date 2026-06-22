@@ -1,4 +1,4 @@
-// Perguntas do Quiz sobre Cidadania Digital e IA
+// Perguntas do Quiz sobre Cidadania Digital e IA ampliado
 const quizData = [
     {
         question: "O que é um 'Deepfake'?",
@@ -29,78 +29,35 @@ const quizData = [
             "Porque a IA cobra dinheiro por cada palavra digitada."
         ],
         correct: 0
+    },
+    {
+        question: "O que significa o termo 'Viés algorítmico' (Algorithmic Bias) em IA?",
+        options: [
+            "Quando a IA fica lenta devido ao excesso de usuários.",
+            "A capacidade da IA de prever o futuro com total precisão.",
+            "Preconceitos e distorções que a IA aprende a partir de dados históricos humanos problemáticos.",
+            "O design visual das ferramentas de inteligência artificial."
+        ],
+        correct: 2
+    },
+    {
+        question: "Se você encontrar uma notícia duvidosa gerada por IA nas redes sociais, qual a atitude correta do cidadão digital?",
+        options: [
+            "Compartilhar imediatamente para avisar os amigos, sem checar.",
+            "Ignorar completamente e não fazer nada.",
+            "Validar a informação em fontes confiáveis e denunciar a publicação se for fake news.",
+            "Comentar na publicação fingindo que é verdade para ganhar curtidas."
+        ],
+        correct: 2
+    },
+    {
+        question: "Qual das alternativas abaixo define uma 'Alucinação' de uma Inteligência Artificial?",
+        options: [
+            "Quando o sistema de IA é infectado por um vírus biológico.",
+            "Quando a IA gera uma resposta que parece confiável e correta, mas que é completamente inventada ou incorreta.",
+            "Quando o computador desliga sozinho por superaquecimento.",
+            "Um filtro de realidade aumentada usado em chamadas de vídeo."
+        ],
+        correct: 1
     }
 ];
-
-let currentQuestionIndex = 0;
-let score = 0;
-
-const questionText = document.getElementById("question-text");
-const optionsContainer = document.getElementById("options-container");
-const resultBox = document.getElementById("result-box");
-const questionBox = document.getElementById("question-box");
-const scoreText = document.getElementById("score-text");
-
-function loadQuestion() {
-    resetState();
-    let currentQuestion = quizData[currentQuestionIndex];
-    questionText.innerText = currentQuestion.question;
-
-    currentQuestion.options.forEach((option, index) => {
-        const button = document.createElement("button");
-        button.innerText = option;
-        button.classList.add("btn-option");
-        button.addEventListener("click", () => selectAnswer(index, button));
-        optionsContainer.appendChild(button);
-    });
-}
-
-function resetState() {
-    while (optionsContainer.firstChild) {
-        optionsContainer.removeChild(optionsContainer.firstChild);
-    }
-}
-
-function selectAnswer(selectedIndex, clickedButton) {
-    const correctIndex = quizData[currentQuestionIndex].correct;
-    const allButtons = optionsContainer.querySelectorAll(".btn-option");
-
-    // Desabilita todos os botões após o clique para o usuário não clicar duas vezes
-    allButtons.forEach(button => button.disabled = true);
-
-    if (selectedIndex === correctIndex) {
-        clickedButton.classList.add("correct");
-        score++;
-    } else {
-        clickedButton.classList.add("wrong");
-        // Mostra a resposta correta em verde
-        allButtons[correctIndex].classList.add("correct");
-    }
-
-    // Espera 2 segundos para passar para a próxima pergunta
-    setTimeout(() => {
-        currentQuestionIndex++;
-        if (currentQuestionIndex < quizData.length) {
-            loadQuestion();
-        } else {
-            showResults();
-        }
-    }, 2000);
-}
-
-function showResults() {
-    questionBox.classList.add("hidden");
-    resultBox.classList.remove("hidden");
-    scoreText.innerText = `Você acertou ${score} de ${quizData.length} perguntas!`;
-}
-
-function restartGame() {
-    currentQuestionIndex = 0;
-    score = 0;
-    resultBox.classList.add("hidden");
-    questionBox.classList.remove("hidden");
-    loadQuestion();
-}
-
-// Inicializa o jogo ao carregar a página
-window.onload = loadQuestion;
