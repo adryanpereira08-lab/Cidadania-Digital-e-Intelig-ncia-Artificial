@@ -3,60 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conexão Segura | Cidadania Digital e IA</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Portal Cidadania Digital: IA e Desinformação</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <div class="header-container">
-            <h1>Cidadania Digital</h1>
+            <h1>Cidadania Digital 2026</h1>
             <button id="toggle-dark-mode" aria-label="Alternar modo escuro">🌓 Modo Escuro</button>
         </div>
     </header>
 
     <main>
-        <section class="hero-section">
-            <h2>O Impacto das Deepfakes e da Desinformação</h2>
-            <p>A Inteligência Artificial transformou a criação de conteúdos, mas também trouxe desafios reais. Entender o que é uma <strong>deepfake</strong> e como a desinformação se espalha de forma automatizada é o primeiro passo para exercer sua cidadania no ambiente digital.</p>
+        
+        <section class="intro-section">
+            <h2>O Impacto das Deepfakes na Sociedade</h2>
+            <p>Com o avanço da Inteligência Artificial, a criação de mídias falsas ultra-realistas (deepfakes) tornou-se um desafio para a verdade digital. Entender como identificar essas manipulações é um dever da cidadania moderna.</p>
         </section>
 
-        <section class="cards-section">
-            <div class="card">
-                <h3>Como Identificar Deepfakes?</h3>
-                <p>Preste atenção em piscadas de olhos não naturais, falhas na iluminação do rosto, áudio dessincronizado com os lábios e fundos ligeiramente borrados ou distorcidos.</p>
-            </div>
-            <div class="card">
-                <h3>Perigos da Automação</h3>
-                <p>Robôs e algoritmos podem replicar boatos e notícias falsas em segundos, criando falsas ondas de opinião pública que impactam diretamente a nossa sociedade.</p>
+        <section class="guide-section">
+            <h2>Como Identificar uma Deepfake?</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <h3>👀 Piscada Irregular</h3>
+                    <p>Muitas IA ainda falham em reproduzir o ritmo natural de piscadas dos olhos humanos.</p>
+                </div>
+                <div class="card">
+                    <h3>🔊 Áudio Desalinhado</h3>
+                    <p>Preste atenção se o movimento dos lábios coincide perfeitamente com o som emitido.</p>
+                </div>
+                <div class="card">
+                    <h3>🖼️ Falhas nas Bordas</h3>
+                    <p>Fons borrados ou distorções ao redor do rosto e orelhas revelam montagens digitais.</p>
+                </div>
             </div>
         </section>
 
-        <section class="interactive-section">
-            <h2>Teste seus Conhecimentos</h2>
-            <p>Você sabe identificar uma notícia falsa ou uma mídia manipulada por IA? Responda abaixo:</p>
+        <section class="quiz-section">
+            <h2>Quiz Anti-Desinformação</h2>
+            <p>Teste suas habilidades! Recebeu um vídeo bombástico de um político no WhatsApp. O que você faz?</p>
             
             <form id="quiz-form">
-                <div class="form-group">
-                    <label for="quiz-question">Se um vídeo de uma figura pública apresenta cortes bruscos e voz robótica, o que você deve fazer?</label>
-                    <select id="quiz-question" required>
-                        <option value="" disabled selected>Escolha uma opção...</option>
-                        <option value="compartilhar">Compartilhar imediatamente nos grupos</option>
-                        <option value="verificar">Desconfiar e verificar em agências de checagem</option>
-                        <option value="ignorar">Acreditar que é 100% real</option>
-                    </select>
+                <div class="options-container">
+                    <label class="quiz-option">
+                        <input type="radio" name="quiz-answer" value="errado1">
+                        <span>Compartilho imediatamente com meus amigos e familiares.</span>
+                    </label>
+                    
+                    <label class="quiz-option">
+                        <input type="radio" name="quiz-answer" value="correto">
+                        <span>Verifico em portais de checagem antes de repassar.</span>
+                    </label>
+                    
+                    <label class="quiz-option">
+                        <input type="radio" name="quiz-answer" value="errado2">
+                        <span>Acredito se parecer muito real visualmente.</span>
+                    </label>
                 </div>
-                <button type="submit" id="btn-submit">Verificar Resposta</button>
+                <button type="button" id="btn-submit-quiz">Verificar Resposta</button>
             </form>
 
-            <div id="quiz-feedback" class="feedback-box hidden"></div>
+            <div id="quiz-feedback" class="hidden"></div>
         </section>
+
     </main>
 
     <footer>
-        <p>&copy; 2026 - Desenvolvido para o Projeto de Educação Digital e IA. Conteúdo Autoral.</p>
+        <p>&copy; 2026 - Desenvolvido para o Projeto de Educação Digital e IA. Conteúdo 100% Autoral.</p>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
